@@ -1,0 +1,52 @@
+@startuml
+
+class BufferedReader
+abstract Reader
+interface Readable
+interface Closeable
+interface AutoCloseable
+class BufferedWriter
+abstract Writer
+interface Appendable
+interface Flushable
+class CharArrayReader
+class CharArrayWriter
+class InputStreamReader
+class FileReader
+abstract FilterReader
+abstract FilterWriter
+class OutputStreamWriter
+class FileWriter
+class LineNumberReader
+class PipedReader
+class PipedWriter
+class PrintWriter
+class PushbackReader
+class StringReader
+class StringWriter
+
+Reader <|-- BufferedReader
+Readable <|.. Reader
+Closeable <|.. Reader
+AutoCloseable <|-- Closeable
+Writer <|-- BufferedWriter
+Appendable <|.. Writer
+Flushable <|.. Writer
+Closeable <|.. Writer
+Reader <|-- CharArrayReader
+Writer <|-- CharArrayWriter
+Reader <|-- InputStreamReader
+InputStreamReader <|-- FileReader
+Reader <|-- FilterReader
+Writer <|-- FilterWriter
+OutputStreamWriter <|-- FileWriter
+Writer <|-- OutputStreamWriter
+BufferedReader <|-- LineNumberReader
+Reader <|-- PipedReader
+Writer <|-- PipedWriter
+Writer <|-- PrintWriter
+FileReader <|-- PushbackReader
+Reader <|-- StringReader
+Writer <|-- StringWriter
+
+@enduml

@@ -1,0 +1,61 @@
+@startuml
+
+interface AutoCloseable
+interface Closeable
+abstract  InputStream
+class FilterInputStream
+class BufferedInputStream
+class BufferedOutputStream
+class FilterOutputStream
+abstract  OutputStream
+interface Flushable
+class ByteArrayInputStream
+class ByteArrayOutputStream
+class DataInputStream
+interface DataInput
+class DataOutputStream
+interface DataOutput
+class FileInputStream
+class FileOutputStream
+class ObjectInputStream
+interface ObjectInput
+interface ObjectStreamConstants
+class PipedInputStream
+class PipedOutputStream
+class PrintStream
+interface Appendable
+class PushbackInputStream
+class RandomAccessFile
+
+AutoCloseable <|-- Closeable
+Closeable <|.. InputStream
+InputStream <|-- FilterInputStream
+FilterInputStream <|-- BufferedInputStream
+FilterOutputStream <|-- BufferedOutputStream
+OutputStream <|-- FilterOutputStream
+Closeable <|.. OutputStream
+Flushable <|.. OutputStream
+InputStream <|-- ByteArrayInputStream
+OutputStream <|-- ByteArrayOutputStream
+FilterInputStream <|-- DataInputStream
+DataInput <|.. DataInputStream
+FilterOutputStream <|-- DataOutputStream
+DataOutput <|.. DataOutputStream
+InputStream <|-- FileInputStream
+OutputStream <|-- FileOutputStream
+InputStream <|-- ObjectInputStream
+DataInput <|-- ObjectInput
+Closeable <|-- ObjectInput
+ObjectInput <|.. ObjectInputStream
+ObjectStreamConstants <|.. ObjectInputStream
+InputStream <|-- PipedInputStream
+OutputStream <|-- PipedOutputStream
+FilterOutputStream <|-- PrintStream
+Appendable <|.. PrintStream
+Closeable <|.. PrintStream
+FilterInputStream <|-- PushbackInputStream
+DataOutput <|.. RandomAccessFile
+DataInput <|.. RandomAccessFile
+Closeable <|.. RandomAccessFile
+
+@enduml

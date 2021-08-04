@@ -1,0 +1,11 @@
+@startuml
+
+interface Serializable
+interface Guard
+abstract Permission
+class FilePermission
+Guard <|.. Permission
+Permission <|-- FilePermission
+Serializable <|.. FilePermission
+
+@enduml

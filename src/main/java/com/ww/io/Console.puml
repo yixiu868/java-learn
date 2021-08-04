@@ -1,0 +1,8 @@
+@startuml
+
+interface Flushable
+class Console
+
+Flushable <|-- Console
+
+@enduml

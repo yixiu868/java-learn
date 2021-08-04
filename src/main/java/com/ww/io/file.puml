@@ -1,0 +1,10 @@
+@startuml
+
+interface Serializable
+interface Comparable
+class File
+
+Comparable <|.. File
+Serializable <|.. File
+
+@enduml
