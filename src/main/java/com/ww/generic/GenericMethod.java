@@ -34,6 +34,7 @@ public class GenericMethod {
 	
 	/**
 	 * 不是一个泛型方法
+	 * 如果是?表示可以放Object类型以及他的子类
 	 * @param obj
 	 */
 	public void showKeyValue2(Generic<?> obj) {
