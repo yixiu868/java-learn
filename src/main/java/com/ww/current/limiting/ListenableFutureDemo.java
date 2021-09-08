@@ -22,7 +22,8 @@ public class ListenableFutureDemo {
     /**
      * RateLimiter类似于JDK的信号量Semphore，用来限制对资源并发访问的线程数
      */
-    public static void testRateLimiter() {
+    @SuppressWarnings("unused")
+	public static void testRateLimiter() {
         ListeningExecutorService executorService = MoreExecutors.listeningDecorator(Executors.newCachedThreadPool());
         RateLimiter limiter = RateLimiter.create(5.0); // 每秒不超过4个任务被提交
 

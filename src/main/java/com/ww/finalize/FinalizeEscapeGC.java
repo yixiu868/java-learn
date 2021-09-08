@@ -17,7 +17,8 @@ public class FinalizeEscapeGC {
         System.out.println("yes, i am still alive :)");
     }
     
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     protected void finalize() throws Throwable {
         super.finalize();
         System.out.println("finalize method executed!");

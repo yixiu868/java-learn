@@ -13,7 +13,8 @@ import java.util.List;
  */
 public class Path001 {
 
-    public static void main(String[] args) throws IOException {
+    @SuppressWarnings("unused")
+	public static void main(String[] args) throws IOException {
         // 指定目录Path
         // 方法1：多个参数
         // Windows下使用\拼接，Linux下使用/拼接

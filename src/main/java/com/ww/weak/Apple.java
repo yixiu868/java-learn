@@ -16,7 +16,8 @@ public class Apple {
         this.name = name;
     }
     
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     protected void finalize() throws Throwable {
         super.finalize();
         System.out.println("Apple: " + name + " finalize.");
