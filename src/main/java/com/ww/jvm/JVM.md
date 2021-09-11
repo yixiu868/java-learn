@@ -447,3 +447,95 @@ G1收集器建立可预测的停顿时间模型。Region作为单次回收的最
 
 `具体思路`让G1收集器去跟踪各个Region里面的垃圾堆的价值大小，价值就是指回收到的空间大小以及回收需要时间，在后台维护一个优先级列表。
 
+## JVM定位问题工具
+
+参考链接
+
+[JVM故障分析及性能优化系列](https://www.javatang.com/archives/2017/10/19/33151873.html)
+
+### jstack
+
+jstack是Java虚拟机自带的一种堆栈跟踪工具。可以对活着的进程进行本地或远程线程的dump。
+
+`主要目的`：定位线程出现长时间停顿的原因，比如线程间死锁、死循环、请求外部资源导致的长时间等待等。
+
+参考链接
+
+[java命令--jstack 工具](https://www.cnblogs.com/kongzhongqijing/articles/3630264.html)
+
+```java
+"AsyncFileHandlerWriter-1259475182" #10 daemon prio=5 os_prio=0 tid=0x00007f5a0c11d800 nid=0x29fe waiting on condition [0x00007f59fa22c000]
+   java.lang.Thread.State: TIMED_WAITING (parking)
+        at sun.misc.Unsafe.park(Native Method)
+        - parking to wait for  <0x00000000c521e108> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+        at java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+        at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+        at java.util.concurrent.LinkedBlockingDeque.pollFirst(LinkedBlockingDeque.java:522)
+        at java.util.concurrent.LinkedBlockingDeque.poll(LinkedBlockingDeque.java:684)
+        at org.apache.juli.AsyncFileHandler$LoggerThread.run(AsyncFileHandler.java:160)
+
+"Service Thread" #7 daemon prio=9 os_prio=0 tid=0x00007f5a0c0bd000 nid=0x29fa runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C1 CompilerThread1" #6 daemon prio=9 os_prio=0 tid=0x00007f5a0c0ba800 nid=0x29f8 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread0" #5 daemon prio=9 os_prio=0 tid=0x00007f5a0c0b7800 nid=0x29f6 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Signal Dispatcher" #4 daemon prio=9 os_prio=0 tid=0x00007f5a0c0b6000 nid=0x29f5 runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Finalizer" #3 daemon prio=8 os_prio=0 tid=0x00007f5a0c083000 nid=0x29f3 in Object.wait() [0x00007f59faf5b000]
+   java.lang.Thread.State: WAITING (on object monitor)
+        at java.lang.Object.wait(Native Method)
+        - waiting on <0x00000000c4c26820> (a java.lang.ref.ReferenceQueue$Lock)
+        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:144)
+        - locked <0x00000000c4c26820> (a java.lang.ref.ReferenceQueue$Lock)
+        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:165)
+        at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:216)
+
+"Reference Handler" #2 daemon prio=10 os_prio=0 tid=0x00007f5a0c07e000 nid=0x29f0 in Object.wait() [0x00007f59fb05c000]
+   java.lang.Thread.State: WAITING (on object monitor)
+        at java.lang.Object.wait(Native Method)
+        - waiting on <0x00000000c4c26860> (a java.lang.ref.Reference$Lock)
+        at java.lang.Object.wait(Object.java:502)
+        at java.lang.ref.Reference.tryHandlePending(Reference.java:191)
+        - locked <0x00000000c4c26860> (a java.lang.ref.Reference$Lock)
+        at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:153)
+
+"main" #1 prio=5 os_prio=0 tid=0x00007f5a0c00a000 nid=0x29e7 runnable [0x00007f5a14771000]
+   java.lang.Thread.State: RUNNABLE
+        at java.net.PlainSocketImpl.socketAccept(Native Method)
+        at java.net.AbstractPlainSocketImpl.accept(AbstractPlainSocketImpl.java:535)
+        at java.net.ServerSocket.implAccept(ServerSocket.java:545)
+        at java.net.ServerSocket.accept(ServerSocket.java:513)
+        at org.apache.catalina.core.StandardServer.await(StandardServer.java:447)
+        at org.apache.catalina.startup.Catalina.await(Catalina.java:776)
+        at org.apache.catalina.startup.Catalina.start(Catalina.java:722)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:343)
+        at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:474)
+
+```
+
+### jstat
+
+[jstat工具使用](https://www.cnblogs.com/kongzhongqijing/articles/3625574.html)
+
+用于监控`虚拟机各种运行状态`信息的命令行工具，监视JVM内存工具。
+
+用以判断JVM是否存在内存问题？如何判断JVM垃圾回收是否正常？
+
+#### 统计gc信息
+
+![dae4970634a2869494f1be5c756084fa_301156076411757](img\dae4970634a2869494f1be5c756084fa_301156076411757.jpg)
+
+### jmap
+
+主要用于打印指定Java进程共享对象内存映射或堆内存细节。
+
+可以获得运行中的`jvm的堆快照`，从而可以离线分析堆，以检查`内存泄漏`，检查一些`严重影响性能的对象的创建`，检查系统中什么对象最多，各种对象所占内存大小等等；还可以使用jmap生成`Heap Dump`。
