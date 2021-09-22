@@ -8,6 +8,10 @@
 
 [三个实例演示Java Thread Dump日志分析](https://www.cnblogs.com/zhengyun_ustc/archive/2013/01/06/dumpanalysis.html)
 
+[一次应用 CPU 飙高的血案排查过程](https://mp.weixin.qq.com/s?__biz=MzA3MTUzOTcxOQ==&mid=2452966362&idx=1&sn=259bf1e005f3d54b979e8b9454ba9477&from=groupmessage&ascene=1&devicetype=android-28&version=2700043a&nettype=WIFI&abtest_cookie=BQABAAgACgALABIAEwAHAJ6GHgAjlx4AVpkeAM6ZHgDcmR4A9JkeAAOaHgAAAA%3D%3D&lang=zh_CN&pass_ticket=Y0Jy%2FdPMQxL5O0S0gFsqeE7Uomly8r%2BfmggGysGv33oHIqS%2FahyiMqVRURatk1Yk&wx_header=1)
+
+[Jstack工具详解指南](https://blog.csdn.net/justry_deng/article/details/90447410)
+
 步骤：
 
 1. top拿到占用cpu比较高的进程
